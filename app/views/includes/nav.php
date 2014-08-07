@@ -3,7 +3,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>My first bootstrap template</title>
+    
     <!-- Bootstrap -->
     <link rel="stylesheet" type="text/css" href="/twitterBootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/mystyle.css">
@@ -20,14 +20,16 @@
 		        <span class="icon-bar"></span>
 		        <span class="icon-bar"></span>
 		      </button>
-		      <a class="navbar-brand" href="#">Brand</a>
+		      <a class="navbar-brand" href="#">OrganizeMe</a>
 		    </div>
 		    <div class="navbar-collapse collapse" id="navbar-collapsible">
+		    <!--
 		      <ul class="nav navbar-nav navbar-left">
 		        <li><a href="/home">Home</a></li>
 		        <li><a href="#section2">About</a></li>
 		        <li><a href="#section3">How</a></li>
 		      </ul>
+		  -->
 		      <ul class="nav navbar-nav navbar-right">
 		      	<?php
 		      		
@@ -47,6 +49,9 @@
 		    </div>
 		</div>
 	 </nav>
+	 <br>
+	 <br>
+	 <br>
 
       <script src="/jquery-2.1.1.min.js"></script>
       <script src="/twitterBootstrap/dist/js/bootstrap.min.js"></script>

@@ -125,12 +125,16 @@
 	        <hr>
 	        	<?php
 	        		date_default_timezone_set('America/New_York');
+
+	        		//Accesses the table columns CSC 211 in both the posts and exams table
 	        		$posts = Post::where('post_class','MTH 121')->get();
          			$exams = Exam::where('exam_class','MTH 121')->get();
+
                     $today = date('Y-m-d');
 
 					foreach($posts as $post)
 					{
+						//If date of post is the same as toaday
 						if($post->post_date == $today)
 						{
 					    	echo "<div class='panel panel-primary'>";
@@ -146,6 +150,7 @@
 								
 						}
 
+						//If not, continue looking through posts
 						else
 						{
 							continue;
@@ -155,6 +160,7 @@
 
 					foreach($exams as $exam)
 					{
+						//If date of exam being looked at is the same as today's date
 						if($exam->exam_date == $today)
 						{
 							echo "<div class='panel panel-danger'>";
@@ -169,6 +175,7 @@
 							echo "<br>";
 						}
 
+						//If not, keep looking through exams table
 						else
 						{
 							continue;
@@ -181,20 +188,29 @@
 			<h3>Due tomorrow</h3>
 			<hr>
 				<?php
+
+					//Accesses both the column CSC 211 in both the posts and exams databse table
 					$posts = Post::where('post_class','MTH 121')->get();
 					$exams = Exam::where('exam_class','MTH 121')->get();
+
 					$today = date('Y-m-d');
 
 					foreach($posts as $post)
 					{
+						//Makes today's date and the date of the post that is being looked at
+						//from the database table into date objects so that the difference between 
+						//the two can be calculated
 						$today2 = date_create($today);
 						$Post = date_create($post->post_date);
-					    $diff = date_diff($today2,$Post);
+					    $diff=date_diff($today2,$Post);
 					
+						//Stores the day of the post so that we can use it later
 						$postDate = $post->post_date;
 						$date = strtotime($postDate);
 						$day = date('l',$date);
 
+						//If the difference between the current date and the post date
+						//is 1 and the post date is 1 day ahead of the current date
 						if(($diff->days == 1) && ($Post > $today2))
 						{
 							echo "<div class='panel panel-primary'>";
@@ -209,6 +225,7 @@
 							echo "<br>";
 						}
 
+						//If not, keeping looking through posts in database table
 						else
 						{
 							continue;
@@ -218,19 +235,26 @@
 
 					foreach($exams as $exam)
 					{
+						///Makes today's date and the date of the exam that is being looked at
+						//from the database table into date objects so that the difference between 
+						//the two can be calculated
 						$today2 = date_create($today);
 						$examDate = date_create($exam->exam_date);
 					    $diff = date_diff($today2,$examDate);
-					    $tomorrow = new DateTime("tomorrow");
-					    $yesterday = new DateTime("yesterday");
-					
+
+					 
+						//Stores the day of the exam so that we can use it later
 						$ExamDate = $exam->exam_date;
 						$date = strtotime($ExamDate);
 						$day = date('m/d',$date);
 						$dayOfWeek = date('l',$date);
 
+
+						//If the difference between the current date and the exam date
+						//is 1 and the post date is 1 day ahead of the current date
 						if(($diff->days == 1) && ($examDate > $today2)) 
 						{
+							echo "<h4>$dayOfWeek $day</h4>";
 							echo "<div class='panel panel-danger'>";
 								echo "<div class='panel-heading'>";
 									print_r($exam->exam_title);
@@ -243,6 +267,7 @@
 							echo "<br>";
 						}
 
+						//Continue looking through exam database table
 						else
 						{
 							continue;
@@ -256,24 +281,32 @@
 			<h3>Due in the next 5 days</h3>
 			<hr>
 				<?php
+
+					//Accesses both the column CSC 211 in both the posts and exams databse table
 					$posts = Post::where('post_class','MTH 121')->get();
 					$exams = Exam::where('exam_class','MTH 121')->get();
 					$today = date('Y-m-d');
 
 					foreach($posts as $post)
 					{
+						//Makes today's date and the date of the post that is being looked at
+						//from the database table into date objects so that the difference between 
+						//the two can be calculated
 						$today2 = date_create($today);
 						$Post = date_create($post->post_date);
 					    $diff=date_diff($today2,$Post);
+
+					    //Get and store tomorrow's and yesterday's date to be used later
 					    $tomorrow = new DateTime("tomorrow");
 					    $yesterday = new DateTime("yesterday");
 					
+						//Stores the day of the post so that we can use it later
 						$postDate = $post->post_date;
 						$date = strtotime($postDate);
-						$day = date('m/d',$date);
-						$dayOfWeek = date('l',$date);
+						$day = date('l',$date);
 
-						if(($post->post_date !== $today) && ($diff->days <= 5) && ($Post != $tomorrow) && ($Post != $yesterday)) 
+						//If the date of the post is not today, is within the next 5 days, is not tomorrow, and is not yesterday
+						if(($post->post_date !== $today) && (($diff->days <= 5) && !($today2 > $Post)) && ($Post != $tomorrow) && ($Post != $yesterday)) 
 						{
 							echo "<h4>$dayOfWeek $day</h4>";
 							echo "<div class='panel panel-primary'>";
@@ -288,6 +321,7 @@
 							echo "<br>";
 						}
 
+						//Continue looking through posts database table
 						else
 						{
 							continue;
@@ -297,18 +331,26 @@
 
 					foreach($exams as $exam)
 					{
+						///Makes today's date and the date of the exam that is being looked at
+						//from the database table into date objects so that the difference between 
+						//the two can be calculated
 						$today2 = date_create($today);
 						$examDate = date_create($exam->exam_date);
 					    $diff = date_diff($today2,$examDate);
+
+					    //Get and store tomorrow's and yesterday's date to be used later
 					    $tomorrow = new DateTime("tomorrow");
 					    $yesterday = new DateTime("yesterday");
-					
+
+					 
+						//Stores the day of the exam so that we can use it later
 						$ExamDate = $exam->exam_date;
 						$date = strtotime($ExamDate);
 						$day = date('m/d',$date);
 						$dayOfWeek = date('l',$date);
 
-						if(($exam->exam_date !== $today) && ($diff->days <= 5) && ($examDate != $tomorrow) && ($examDate != $yesterday))  
+						//If the date of the exam is not today, is within the next 5 days, is not tomorrow, and is not yesterday
+						if(($exam->exam_date !== $today) && ($diff->days <= 5) && ($examDate != $tomorrow) && ($examDate != $yesterday) && !($today2 > $examDate))  
 						{
 							echo "<h4>$dayOfWeek $day</h4>";
 							echo "<div class='panel panel-danger'>";
@@ -323,6 +365,7 @@
 							echo "<br>";
 						}
 
+						//Continue looking through exam table
 						else
 						{
 							continue;
@@ -337,24 +380,31 @@
 			<h3>Due in a week or later, so you don't have to really get started on these just yet...</h3>
 			<hr>
 				<?php
+
+					//Accesses the column 'CSC 211' in the exam and post database table
 					$posts = Post::where('post_class','MTH 121')->get();
 					$exams = Exam::where('exam_class','MTH 121')->get();
 					$today = date('Y-m-d');
 
 					foreach($posts as $post)
 					{
+						//Makes today's date and the date of the post that is being looked at
+						//from the database table into date objects so that the difference between 
+						//the two can be calculated
 						$today2 = date_create($today);
 						$Post = date_create($post->post_date);
 					    $diff=date_diff($today2,$Post);
 					
+						//Stores the day of the post so that we can use it later
 						$postDate = $post->post_date;
 						$date = strtotime($postDate);
-						$day = date('m/d',$date);
-						$dayOfWeek = date('l',$date);
+						$day = date('l',$date);
+						$dayOfWeek = date('m/d',$date);
 
+						//If the difference between the post date and today's date is 6 days or more
 						if(($diff->days) >= 6)
 						{
-							echo "<h4>$dayOfWeek $day</h4>";
+							echo "<h4>$day $dayOfWeek</h4>";
 							echo "<div class='panel panel-primary'>";
 								echo "<div class='panel-heading'>";
 								    print_r($post->post_title);
@@ -367,6 +417,7 @@
 							echo "<br>";
 						}
 
+						//continue to look through posts in database table
 						else
 						{
 							continue;
@@ -376,15 +427,21 @@
 
 					foreach($exams as $exam)
 					{
+						///Makes today's date and the date of the exam that is being looked at
+						//from the database table into date objects so that the difference between 
+						//the two can be calculated
 						$today2 = date_create($today);
 						$examDate = date_create($exam->exam_date);
 					    $diff = date_diff($today2,$examDate);
-					
+
+					 
+						//Stores the day of the exam so that we can use it later
 						$ExamDate = $exam->exam_date;
 						$date = strtotime($ExamDate);
 						$day = date('m/d',$date);
 						$dayOfWeek = date('l',$date);
 
+						//If the difference between the post date and today's date is 6 days or more
 						if(($diff->days) >= 6)
 						{
 							echo "<h4>$dayOfWeek $day</h4>";
@@ -400,6 +457,7 @@
 							echo "<br>";
 						}
 
+						//Continue to look through exam database table
 						else
 						{
 							continue;

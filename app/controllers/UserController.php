@@ -7,6 +7,36 @@ class UserController extends BaseController
 		return View::make('home');  
 	}
 
+	function showCSC211()
+	{
+		return View::make('CSC211');
+	}
+
+	function showCSC241()
+	{
+		return View::make('CSC241');
+	}
+
+	function showMTH121()
+	{
+		return View::make('MTH121');
+	}
+
+	function showMTH243()
+	{
+		return View::make('MTH243');
+	}
+
+	function show1834()
+	{
+		return View::make('1834Soft');
+	}
+
+	function showTests()
+	{
+		return View::make('tests');
+	}
+
 	
 	function showCreateAccount()
 	{

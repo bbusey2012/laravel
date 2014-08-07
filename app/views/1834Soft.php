@@ -127,12 +127,15 @@
 	        <hr>
 	        	<?php
 	        		date_default_timezone_set('America/New_York');
+
+	        		//Accesses 1834 column in posts database table
 	        		$posts = Post::where('post_class','1834')->get();
          
                     $today = date('Y-m-d');
 
 					foreach($posts as $post)
 					{
+						//If date of post is same as today
 						if($post->post_date == $today)
 						{
 					    	echo "<div class='panel panel-warning'>";
@@ -148,6 +151,7 @@
 								
 						}
 
+						//If not, continue looking through posts table
 						else
 						{
 							continue;
@@ -161,20 +165,29 @@
 			<h3>Due tomorrow</h3>
 			<hr>
 				<?php
+					
+					//Accesses 1834 column in posts database table
 					$posts = Post::where('post_class','1834')->get();
+
 					$today = date('Y-m-d');
 
 					foreach($posts as $post)
 					{
+						//Makes today's date and the date of the post that is being looked at
+						//from the database table into date objects so that the difference between 
+						//the two can be calculated
 						$today2 = date_create($today);
 						$Post = date_create($post->post_date);
-					    $diff = date_diff($today2,$Post);
+					    $diff=date_diff($today2,$Post);
 					
+						//Stores the day of the post so that we can use it later
 						$postDate = $post->post_date;
 						$date = strtotime($postDate);
-						$day = date('m/d',$date);
-						$dayOfWeek = date('l',$date);
+						$day = date('l',$date);
 
+
+						//If the difference between the current date and the post date
+						//is 1 and the post date is 1 day ahead of the current date
 						if(($diff->days == 1) && ($Post > $today2))
 						{
 							echo "<h4>$dayOfWeek $day</h4>";
@@ -190,6 +203,7 @@
 							echo "<br>";
 						}
 
+						//Continue looking through posts database table
 						else
 						{
 							continue;
@@ -203,23 +217,27 @@
 			<h3>Due in the next 5 days</h3>
 			<hr>
 				<?php
+
+					//Accesses 1834 column in posts database table
 					$posts = Post::where('post_class','1834')->get();
+
 					$today = date('Y-m-d');
 
 					foreach($posts as $post)
 					{
+						//Makes today's date and the date of the post that is being looked at
+						//from the database table into date objects so that the difference between 
+						//the two can be calculated
 						$today2 = date_create($today);
 						$Post = date_create($post->post_date);
 					    $diff=date_diff($today2,$Post);
-					    $tomorrow = new DateTime("tomorrow");
-					    $yesterday = new DateTime("yesterday");
 					
+						//Stores the day of the post so that we can use it later
 						$postDate = $post->post_date;
 						$date = strtotime($postDate);
-						$day = date('m/d',$date);
-						$dayOfWeek = date('l',$date);
+						$day = date('l',$date);
 
-						if(($post->post_date !== $today) && ($diff->days <= 5) && ($Post != $tomorrow) && ($Post != $yesterday)) 
+						if(($post->post_date !== $today) && (($diff->days <= 5) && !($today2 > $Post)) && ($Post != $tomorrow) && ($Post != $yesterday)) 
 						{
 							echo "<h4>$dayOfWeek $day</h4>";
 							echo "<div class='panel panel-warning'>";
@@ -234,6 +252,7 @@
 							echo "<br>";
 						}
 
+						//Continue looking through posts database table
 						else
 						{
 							continue;
@@ -248,20 +267,27 @@
 			<h3>Due in a week or later, so you don't have to really get started on these just yet...</h3>
 			<hr>
 				<?php
+					
+					//Accesses 1834 column in posts database table
 					$posts = Post::where('post_class','1834')->get();
+
 					$today = date('Y-m-d');
 
 					foreach($posts as $post)
 					{
+						//Makes today's date and the date of the post that is being looked at
+						//from the database table into date objects so that the difference between 
+						//the two can be calculated
 						$today2 = date_create($today);
 						$Post = date_create($post->post_date);
 					    $diff=date_diff($today2,$Post);
 					
+						//Stores the day of the post so that we can use it later
 						$postDate = $post->post_date;
 						$date = strtotime($postDate);
-						$day = date('m/d',$date);
-						$dayOfWeek = date('l',$date);
+						$day = date('l',$date);
 
+						//if the difference between the post date and today's date is 6 or more
 						if(($diff->days) >= 6)
 						{
 							echo "<h4>$dayOfWeek $day</h4>";
@@ -277,6 +303,7 @@
 							echo "<br>";
 						}
 
+						//Continue looking through post database table
 						else
 						{
 							continue;
