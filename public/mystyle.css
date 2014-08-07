@@ -1,158 +1,121 @@
-/*
-body
-{
-	creates a grey gradient from right to left across the page
-	background: linear-gradient(to right, rgba(100, 100, 100, 0.5), rgba(100, 100, 100, 0.5));
-	background: url("http://www.windsim.com/images/sky/sky_107.bmp");
-	
-	background-color: #dddddd !important;
-	background-color:#111111;
-  	color: #666 !important;
-  	padding-top:100px;
-  	
-}
-*/
 
 
 /*Code to change link colors in navbar*/
 .navbar-inverse .brand, .navbar-inverse .nav > li > a 
 {
-	color: #c5b358;
+	color: #E5E4E2;
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 }
 
 .navbar-inverse .navbar-brand
 {
-	color: #c5b358;
+	color: #E5E4E2;
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 }
 .navbar .nav > li > a 
 {
 	float: none;
 	/*padding: 10px 15px 10px;*/
-	color: #c5b358; 
+	color: #E5E4E2; 
 	text-decoration: none;
 	/*text-shadow: 0 1px 0 #ffffff;*/
 }
 
 
-
-html,body 
+hr
 {
-	height:100%;
-    background:center no-repeat fixed url('/assets/example/bg_suburb.jpg');
+  /*border-top: 2px dashed;*/
+  /*border-color: #FDD017;*/
+  /*color: #FDD017;*/
+  background-color: #FFCC00;
+  margin-top: -5px;
+  border: 1px dotted #FFCC00;
 }
 
-.icon-bar 
+#test-class
 {
-	background-color:#fff;
+  position:absolute;
+}
+
+#test-date
+{
+  position:absolute;
+}
+
+ * Off Canvas
+ * --------------------------------------------------
+ 
+@media screen and (max-width: 768px) {
+  .row-offcanvas {
+    position: relative;
+    -webkit-transition: all 0.25s ease-out;
+    -moz-transition: all 0.25s ease-out;
+    transition: all 0.25s ease-out;
+  }
+
+  .row-offcanvas-left
+  .sidebar-offcanvas {
+    left: -33%;
+  }
+
+  .row-offcanvas-left.active {
+    left: 33%;
+  }
+
+  .sidebar-offcanvas {
+    position: absolute;
+    top: 0;
+    width: 33%;
+    margin-left: 10px;
+  }
+}
+   
+
+
+/* Sidebar navigation */
+.nav-sidebar {
+  background-color: #f5f5f5;
+  margin-right: -15px;
+  margin-bottom: 20px;
+  margin-left: -15px;
+}
+.nav-sidebar > li > a {
+  padding-right: 20px;
+  padding-left: 20px;
+}
+.nav-sidebar > .active > a {
+  color: #fff;
+  background-color: #428bca;
 }
 
 /*
-.navbar-trans 
-{
-	background-color:#279ddd;
-    color:#fff;
-}
+ * Main content
 
-.navbar-trans li>a:hover,.navbar-trans li>a:focus,.navbar-trans li.active 
-{
-	background-color:#38afef;
-}
 
-.navbar-trans a
-{
-    color:#fefefe;
+.main {
+  padding: 20px;
+  background-color: #fff;
 }
-
-.navbar-trans .form-control:focus 
-{
-	border-color: #eee;
-	outline: 0;
-	-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(100,100,100,0.6);
-	box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(100,100,100,0.6);
+@media (min-width: 768px) {
+  .main {
+    padding-right: 40px;
+    padding-left: 40px;
+  }
+}
+.main .page-header {
+  margin-top: 0;
 }
 */
 
-section 
-{
-	padding-top:70px;  
-    padding-bottom:50px; 
-    min-height:calc(100% - 1px);
-}
 
-.v-center 
-{
-    padding-top:10%;
-    font-size:70px;
-}
-  
-.well 
-{
-	border-color:transparent;
-}
 
-a.list-group-item.active,[class*='-info'] 
-{
-	background-color: #168ccc;
-    color:#fff;
-}
   
-#section1 
-{
-	background-color:#c5b358;
-    color:#dedeff;
-}
-  
-#section2 
-{
-	background-color:#551A8B; 
-    color:#ddd;
-}
-  
+
+/*
 #section3 
 {
 	background-color: #168ccc;
     color:#dedeff;
 }
-
-#section2 #section2-row #section2-text h1,p
-{
-	color:#000000;
-}
-
-footer 
-{
-	background-color:#494949;
-    color:#ddd;
-    min-height:100px;
-    padding-top:20px;
-    padding-bottom:40px;
-}
-
-footer .nav>li>a 
-{
-    padding:3px;
-    color:#ccc;
-}
-
-footer .nav>li>a:hover 
-{
-    background-color:transparent;
-	color:#fff;
-}
-
-
-.come-in 
-{
-  transform: translateY(300px);
-  animation: come-in 0.6s ease in;
-  opacity:.7;
-}
-
-.already-visible 
-{
-  transform: translateY(0);
-  animation: none;
-}
+/*
 
