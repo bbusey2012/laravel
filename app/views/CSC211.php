@@ -27,7 +27,7 @@
 	              <li><a href="/MTH121">MTH 121</a></li>
 	              <li><a href="/MTH243">MTH 243</a></li>
 	              <li><a href="/1834Soft">1834 Software</a></li>
-	              <li><a href="/tests">Exams</a></li>
+	              <li><a href="/Exams">Exams</a></li>
 	            </ul>
 	            
 	            <!--Adding a new assignment-->
@@ -294,7 +294,7 @@
 						//the two can be calculated
 						$today2 = date_create($today);
 						$Post = date_create($post->post_date);
-					    $diff=date_diff($today2,$Post);
+					    	$diff=date_diff($today2,$Post);
 
 					    //Get and store tomorrow's and yesterday's date to be used later
 					    $tomorrow = new DateTime("tomorrow");
@@ -303,7 +303,8 @@
 						//Stores the day of the post so that we can use it later
 						$postDate = $post->post_date;
 						$date = strtotime($postDate);
-						$day = date('l',$date);
+						$dayOfWeek = date('l',$date);
+						$day = date('m/d',$date);
 
 						//If the date of the post is not today, is within the next 5 days, is not tomorrow, and is not yesterday
 						if(($post->post_date !== $today) && (($diff->days <= 5) && !($today2 > $Post)) && ($Post != $tomorrow) && ($Post != $yesterday)) 
@@ -389,7 +390,7 @@
 						//the two can be calculated
 						$today2 = date_create($today);
 						$Post = date_create($post->post_date);
-					    $diff=date_diff($today2,$Post);
+					    	$diff=date_diff($today2,$Post);
 					
 						//Stores the day of the post so that we can use it later
 						$postDate = $post->post_date;
@@ -398,7 +399,7 @@
 						$dayOfWeek = date('l',$date);
 
 						//If the difference between the post date and today's date is 6 days or more
-						if(($diff->days) >= 6)
+						if(($diff->days >= 6) && !($diff->days < 0) && ($post->post_date > $today))
 						{
 							echo "<h4>$dayOfWeek $day</h4>";
 							echo "<div class='panel panel-primary'>";
@@ -413,8 +414,8 @@
 							echo "<br>";
 						}
 
-						//continue to look through posts in database table
-						else
+						//If the post date has passed (a.ka. is behind the current date) continue to look through posts in database table
+						if($diff->days< 0 || $post->post_date < $today)
 						{
 							continue;
 						}
@@ -428,7 +429,7 @@
 						//the two can be calculated
 						$today2 = date_create($today);
 						$examDate = date_create($exam->exam_date);
-					    $diff = date_diff($today2,$examDate);
+					    	$diff = date_diff($today2,$examDate);
 
 					 
 						//Stores the day of the exam so that we can use it later
@@ -438,7 +439,7 @@
 						$dayOfWeek = date('l',$date);
 
 						//If the difference between the post date and today's date is 6 days or more
-						if(($diff->days) >= 6)
+						if(($diff->days) >= 6  && !($diff->days < 0) && ($exam->exam_date > $today))
 						{
 							echo "<h4>$dayOfWeek $day</h4>";
 							echo "<div class='panel panel-danger'>";
@@ -453,8 +454,9 @@
 							echo "<br>";
 						}
 
-						//Continue to look through exam database table
-						else
+						//Once the we get to point where all the exam dates are behind the current date,
+						//this makes sure that they don't show up on the screen
+						else if(($diff->days < 0 ) || ($exam->exam_date < $today))
 						{
 							continue;
 						}

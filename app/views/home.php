@@ -17,32 +17,33 @@
 		</div>
 	
 		<div class="container-fluid">
-
-      	<br>
-        <div class="row row-offcanvas row-offcanvas-left">
+      
+      <div class="row row-offcanvas row-offcanvas-left">
         
-	         <div class="col-sm-3 col-md-2 sidebar-offcanvas" id="sidebar" role="navigation">
-	            <ul class="nav nav-sidebar">
-	              <li><a href="/home">Dashboard</a></li>
+         <div class="col-sm-3 col-md-2 sidebar-offcanvas" id="sidebar" role="navigation">
+           
+            <ul class="nav nav-sidebar">
+              	  <li><a href="/home">Dashboard</a></li>
 	              <li><a href="/CSC211">CSC 211</a></li>
 	              <li><a href="/CSC241">CSC 241</a></li>
 	              <li><a href="/MTH121">MTH 121</a></li>
 	              <li><a href="/MTH243">MTH 243</a></li>
-	              <li><a href="/1834Soft">1834 Software</a></li>
-	              <li><a href="/tests">Exams</a></li>
-	            </ul>
-	            
-	            <!--Adding a new post button-->
-				<a href="#post-modal" class="btn btn-default btn-success" data-toggle="modal"><span class="glyphicon glyphicon-plus-sign"></span> New Post</a>
+	              <li><a href="/1834">1834 Software</a></li>
+	              <li><a href="/Exams">Exams</a></li>
+            </ul>
+
+            <!--Adding a new post button-->
+			<a href="#post-modal" class="btn btn-default btn-success" data-toggle="modal"><span class="glyphicon glyphicon-plus-sign"></span> New Post</a>
 
 				<br>
 				<br>
 
 				<!--Adding a new exam button-->
 		    	<a href="#exam-modal" class="btn btn-default btn-success" data-toggle="modal"><span class="glyphicon glyphicon-plus-sign"></span> New Exam</a>
-	         </div>
+          
+        </div><!--/span-->
 
-	         <div id="post-modal" class="modal fade">
+        <div id="post-modal" class="modal fade">
 			        <div class="modal-dialog">
 			          <div class="modal-content">
 			            <div class="modal-header">
@@ -79,7 +80,6 @@
 			      </div><!-- /.modal-dialog -->
 		    	</div>
 
-	         
 		    	<div id="exam-modal" class="modal fade">
 			        <div class="modal-dialog">
 			          <div class="modal-content">
@@ -114,14 +114,10 @@
 					    </form>
 			        </div><!-- /.modal-content -->
 			      </div><!-- /.modal-dialog -->
-		    	</div>
-
-            
-           
-
+			      </div>
         
         <div class="col-sm-9 col-md-10 main">
-	        <h3>Due today</h3>
+          <h3>Due today</h3>
 			<hr>
 				<?php
 					date_default_timezone_set('America/New_York');
@@ -137,18 +133,18 @@
 						//is the same as today
 						if($post->post_date == $today)
 						{
-					    	if($post->post_class == "1834")
-					    	{
-						    	echo "<div class='panel panel-warning'>";
-									echo "<div class='panel-heading'>";
-										print_r($post->post_title);
+						    	if($post->post_class == "1834")
+						    	{
+							    	echo "<div class='panel panel-warning'>";
+										echo "<div class='panel-heading'>";
+											print_r($post->post_title);
+										echo "</div>";
+										echo "<div class='panel-body'>";
+											print_r($post->post_body);
+										echo "</div>";
+										echo "<div class='panel-footer'></div>";
 									echo "</div>";
-									echo "<div class='panel-body'>";
-										print_r($post->post_body);
-									echo "</div>";
-									echo "<div class='panel-footer'></div>";
-								echo "</div>";
-								echo "<br>";
+									echo "<br>";
 							}
 
 							//If the post_class field in the database is not 1834
@@ -331,7 +327,7 @@
 						//the two can be calculated
 						$today2 = date_create($today);
 						$Post = date_create($post->post_date);
-					    $diff=date_diff($today2,$Post);
+					    	$diff=date_diff($today2,$Post);
 
 					    //Get and store tomorrow's and yesterday's date to be used later
 					    $tomorrow = new DateTime("tomorrow");
@@ -348,33 +344,33 @@
 						if(($post->post_date !== $today) && (($diff->days <= 5) && !($today2 > $Post)) && ($Post != $tomorrow) && ($Post != $yesterday)) 
 						{
 							if($post->post_class == "1834")
-					    	{
-						    	echo "<h4>$dayOfWeek $day</h4>";
-						    	echo "<div class='panel panel-warning'>";
-									echo "<div class='panel-heading'>";
-										print_r($post->post_title);
+					    		{
+							    	echo "<h4>$dayOfWeek $day</h4>";
+							    	echo "<div class='panel panel-warning'>";
+										echo "<div class='panel-heading'>";
+											print_r($post->post_title);
+										echo "</div>";
+										echo "<div class='panel-body'>";
+											print_r($post->post_body);
+										echo "</div>";
+										echo "<div class='panel-footer'></div>";
 									echo "</div>";
-									echo "<div class='panel-body'>";
-										print_r($post->post_body);
-									echo "</div>";
-									echo "<div class='panel-footer'></div>";
-								echo "</div>";
-								echo "<br>";
+									echo "<br>";
 							}
 
 							else if($post->post_class != '1834')
 							{
-						    	echo "<h4>$dayOfWeek $day</h4>";
-								echo "<div class='panel panel-primary'>";
-									echo "<div class='panel-heading'>";
-										print_r($post->post_title);
+							    	echo "<h4>$dayOfWeek $day</h4>";
+									echo "<div class='panel panel-primary'>";
+										echo "<div class='panel-heading'>";
+											print_r($post->post_title);
+										echo "</div>";
+										echo "<div class='panel-body'>";
+											print_r($post->post_body);
+										echo "</div>";
+										echo "<div class='panel-footer'></div>";
 									echo "</div>";
-									echo "<div class='panel-body'>";
-										print_r($post->post_body);
-									echo "</div>";
-									echo "<div class='panel-footer'></div>";
-								echo "</div>";
-								echo "<br>";
+									echo "<br>";
 							}
 
 							else
@@ -400,7 +396,7 @@
 						//the two can be calculated
 						$today2 = date_create($today);
 						$examDate = date_create($exam->exam_date);
-					    $diff = date_diff($today2,$examDate);
+					    	$diff = date_diff($today2,$examDate);
 
 					    //Get and store tomorrow's and yesterday's date to be used later
 					    $tomorrow = new DateTime("tomorrow");
@@ -443,6 +439,7 @@
 			<h3>Due in a week or later, so you don't have to really get started on these just yet...</h3>
 			<hr>
 				<?php
+
 					$posts = Post::all();
 					$exams = Exam::all();
 					$today = date('Y-m-d');
@@ -454,7 +451,11 @@
 						//the two can be calculated
 						$today2 = date_create($today);
 						$Post = date_create($post->post_date);
-					    $diff=date_diff($today2,$Post);
+					    	$diff=date_diff($today2,$Post);
+
+					    	 //Get and store tomorrow's and yesterday's date to be used later
+					    	$tomorrow = new DateTime("tomorrow");
+					    	$yesterday = new DateTime("yesterday");
 
 					
 						//Stores the day of the post so that we can use it later
@@ -463,7 +464,9 @@
 						$day = date('m/d',$date);
 						$dayOfWeek = date('l',$date);
 
-						if(($diff->days) >= 6)
+						//Once the we get to point where all the posts dates are behind the current date,
+						//this makes sure that they don't show up on the screen
+						if(($diff->days >= 6) && !($diff->days < 0) && ($post->post_date > $today))
 						{
 							if($post->post_class == "1834")
 							{
@@ -497,13 +500,12 @@
 
 						}
 
-						else
+						if($diff->days< 0 || $post->post_date < $today)
 						{
 							continue;
 						}
 						
 					}
-
 
 					foreach($exams as $exam)
 					{
@@ -512,7 +514,11 @@
 						//the two can be calculated
 						$today2 = date_create($today);
 						$examDate = date_create($exam->exam_date);
-					    $diff = date_diff($today2,$examDate);
+					    	$diff = date_diff($today2,$examDate);
+
+					    	//Get and store tomorrow's and yesterday's date to be used later
+					    	$tomorrow = new DateTime("tomorrow");
+					    	$yesterday = new DateTime("yesterday");
 
 					
 						//Stores the day of the exam so that we can use it later
@@ -521,7 +527,7 @@
 						$day = date('m/d',$date);
 						$dayOfWeek = date('l',$date);
 
-						if(($diff->days) >= 6)
+						if(($diff->days) >= 6  && !($diff->days < 0) && ($exam->exam_date > $today)) 
 						{
 							echo "<h4>$dayOfWeek $day</h4>";
 							echo "<div class='panel panel-danger'>";
@@ -536,20 +542,22 @@
 							echo "<br>";
 						}
 
-						else
+						//Once the we get to point where all the exam dates are behind the current date,
+						//this makes sure that they don't show up on the screen
+						else if(($diff->days < 0 ) || ($exam->exam_date < $today))
 						{
 							continue;
 						}
+						
+							
 						
 					}
 
 				?>
 
-
-					   	
-    	</div>
-    	</div>
-    	</div>
+      </div><!--/row-->
+	</div>
+</div><!--/.container-->
 
 		<script src="/jquery-2.1.1.min.js"></script>
 		<script src="/zabuto_calendar.min.js"></script>
@@ -557,4 +565,3 @@
     	<script src="/myScript.js"></script>
 	</body>
 </html>
-

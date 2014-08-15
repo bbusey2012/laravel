@@ -28,8 +28,7 @@
 	              <li><a href="/CSC241">CSC 241</a></li>
 	              <li><a href="/MTH121">MTH 121</a></li>
 	              <li><a href="/MTH243">MTH 243</a></li>
-	              <li><a href="/1834Soft">1834 Software</a></li>
-	              <li><a href="/Exams">Exams</a></li>
+	              <li><a href="/Exams">Tests</a></li>
 	            </ul>
 	            
 	            <!--Adding a new assignment-->
@@ -37,7 +36,7 @@
 
 				<br>
 				<br>
-
+				
 				<!--Adding a new exam-->
 		    	<a href="#exam-modal" class="btn btn-default btn-success" data-toggle="modal"><span class="glyphicon glyphicon-plus-sign"></span> New Exam</a>
 	         </div>
@@ -115,149 +114,148 @@
 			        </div><!-- /.modal-content -->
 			      </div><!-- /.modal-dialog -->
 		    	</div>
-
             
            
 
         
         <div class="col-sm-9 col-md-10 main">
-        	<h2 class='text-center'>1834 Software<h2>
+        	<h1 class="text-center">Exam Schedule</h1>
 
-			<h3>Due Today</h3>
-	        <hr>
-	        	<?php
-	        		date_default_timezone_set('America/New_York');
+        	<h3>Computer Architecure</h3>
+        	<hr>
+				<?php
+	        		$exams = Exam::where('exam_class','CSC 211')->get();
+	        		$today = date('Y-m-d');
 
-	        		//Accesses 1834 column in posts database table
-	        		$posts = Post::where('post_class','1834')->get();
-         
-                    $today = date('Y-m-d');
-
-					foreach($posts as $post)
+					foreach($exams as $exam)
 					{
-						//If date of post is same as today
-						if($post->post_date == $today)
+						
+						$Exam_Date = $exam->exam_date;
+						$date = strtotime($Exam_Date);
+						$day = date('m/d',$date);
+						$dayOfWeek = date('l',$date);
+
+						$today2 = date_create($today);
+						$examDate = date_create($exam->exam_date);
+					    	$diff = date_diff($today2,$examDate);
+
+					    	//Get and store tomorrow's and yesterday's date to be used later
+					    	$tomorrow = new DateTime("tomorrow");
+					    	$yesterday = new DateTime("yesterday");
+
+						if(($exam->exam_class == "CSC 211")) 
 						{
-					    	echo "<div class='panel panel-warning'>";
-								echo "<div class='panel-heading'>";
-									print_r($post->post_title);
+							
+							if(($diff->days < 0 ) || ($exam->exam_date < $today))
+							{
+								continue;
+							}
+							
+							else
+							{
+								echo "<h4>$dayOfWeek $day</h4>";
+						    		echo "<div class='panel panel-danger'>";
+									echo "<div class='panel-heading'>";
+										print_r($exam->exam_title);
+									echo "</div>";
+									echo "<div class='panel-body'>";
+										print_r($exam->exam_content);
+									echo "</div>";
+									echo "<div class='panel-footer'></div>";
 								echo "</div>";
-								echo "<div class='panel-body'>";
-									print_r($post->post_body);
+								echo "<br>";		
+							}
+							
+						}
+						
+					}
+				?>
+
+			<br>
+
+			<h3>Computer Systems</h3>
+			<hr>
+				<?php
+					date_default_timezone_set('America/New_York');
+	        		$exams = Exam::where('exam_class','CSC 241')->get();
+	        		//$posts = Post::select('exam_class');
+         
+                    //$today = date('Y-m-d');
+
+					foreach($exams as $exam)
+					{
+						$examDate = $exam->exam_date;
+						$date = strtotime($examDate);
+						$day = date('m/d',$date);
+						$dayOfWeek = date('l',$date);
+
+						if($exam->exam_class == "CSC 241")
+						{
+					    	
+					    		if(($diff->days < 0 ) || ($exam->exam_date < $today))
+							{
+								continue;
+							}
+							
+							else
+							{
+								echo "<h4>$dayOfWeek $day</h4>";
+						    		echo "<div class='panel panel-danger'>";
+									echo "<div class='panel-heading'>";
+										print_r($exam->exam_title);
+									echo "</div>";
+									echo "<div class='panel-body'>";
+										print_r($exam->exam_content);
+									echo "</div>";
+									echo "<div class='panel-footer'></div>";
 								echo "</div>";
-								echo "<div class='panel-footer'></div>";
-							echo "</div>";
-							echo "<br>";	
+								echo "<br>";		
+							}
 								
 						}
-
-						//If not, continue looking through posts table
-						else
-						{
-							continue;
-						}
-						
 					}
 				?>
 
 			<br>
 
-			<h3>Due tomorrow</h3>
+			<h3>Linear Algebra</h3>
 			<hr>
 				<?php
-					
-					//Accesses 1834 column in posts database table
-					$posts = Post::where('post_class','1834')->get();
+	        		$exams = Exam::where('exam_class','MTH 121')->get();
+	        		//$posts = Post::select('exam_class');
+         
+                    //$today = date('Y-m-d');
 
-					$today = date('Y-m-d');
-
-					foreach($posts as $post)
+					foreach($exams as $exam)
 					{
-						//Makes today's date and the date of the post that is being looked at
-						//from the database table into date objects so that the difference between 
-						//the two can be calculated
-						$today2 = date_create($today);
-						$Post = date_create($post->post_date);
-					    	$diff=date_diff($today2,$Post);
-					
-						//Stores the day of the post so that we can use it later
-						$postDate = $post->post_date;
-						$date = strtotime($postDate);
-						$day = date('m/d',$date);
-						$dayOfWeek = date('l',$date);
-
-
-						//If the difference between the current date and the post date
-						//is 1 and the post date is 1 day ahead of the current date
-						if(($diff->days == 1) && ($Post > $today2))
-						{
-							//echo "<h4>$dayOfWeek $day</h4>";
-							echo "<div class='panel panel-warning'>";
-								echo "<div class='panel-heading'>";
-								    print_r($post->post_title);
-								echo "</div>";
-								echo "<div class='panel-body'>";
-									print_r($post->post_body);
-								echo "</div>";
-								echo "<div class='panel-footer'></div>";
-							echo "</div>";
-							echo "<br>";
-						}
-
-						//Continue looking through posts database table
-						else
-						{
-							continue;
-						}
 						
-					}
-				?>
-
-			<br>
-
-			<h3>Due in the next 5 days</h3>
-			<hr>
-				<?php
-
-					//Accesses 1834 column in posts database table
-					$posts = Post::where('post_class','1834')->get();
-
-					$today = date('Y-m-d');
-
-					foreach($posts as $post)
-					{
-						//Makes today's date and the date of the post that is being looked at
-						//from the database table into date objects so that the difference between 
-						//the two can be calculated
-						$today2 = date_create($today);
-						$Post = date_create($post->post_date);
-					    $diff=date_diff($today2,$Post);
-					
-						//Stores the day of the post so that we can use it later
-						$postDate = $post->post_date;
-						$date = strtotime($postDate);
+						$examDate = $exam->exam_date;
+						$date = strtotime($examDate);
 						$day = date('m/d',$date);
 						$dayOfWeek = date('l',$date);
 
-						if(($post->post_date !== $today) && (($diff->days <= 5) && !($today2 > $Post)) && ($Post != $tomorrow) && ($Post != $yesterday)) 
+						if($exam->exam_class == "MTH 121")
 						{
-							echo "<h4>$dayOfWeek $day</h4>";
-							echo "<div class='panel panel-warning'>";
-								echo "<div class='panel-heading'>";
-									print_r($post->post_title);
-								echo "</div>";
-								echo "<div class='panel-body'>";
-									print_r($post->post_body);
-								echo "</div>";
+					    		if(($diff->days < 0 ) || ($exam->exam_date < $today))
+							{
+								continue;
+							}
+							
+							else
+							{
+								echo "<h4>$dayOfWeek $day</h4>";
+						    		echo "<div class='panel panel-danger'>";
+									echo "<div class='panel-heading'>";
+										print_r($exam->exam_title);
+									echo "</div>";
+									echo "<div class='panel-body'>";
+										print_r($exam->exam_content);
+									echo "</div>";
 									echo "<div class='panel-footer'></div>";
-							echo "</div>";
-							echo "<br>";
-						}
-
-						//Continue looking through posts database table
-						else
-						{
-							continue;
+								echo "</div>";
+								echo "<br>";		
+							}
+								
 						}
 						
 					}
@@ -266,54 +264,42 @@
 
 			<br>
 
-			<h3>Due in a week or later, so you don't have to really get started on these just yet...</h3>
+			<h3>Codes and Cryptology</h3>
 			<hr>
 				<?php
-					
-					//Accesses 1834 column in posts database table
-					$posts = Post::where('post_class','1834')->get();
+					$exams = Exam::where('exam_class','MTH 243')->get();
 
-					$today = date('Y-m-d');
-
-					foreach($posts as $post)
+					foreach($exams as $exam)
 					{
-						//Makes today's date and the date of the post that is being looked at
-						//from the database table into date objects so that the difference between 
-						//the two can be calculated
-						$today2 = date_create($today);
-						$Post = date_create($post->post_date);
-					    	$diff=date_diff($today2,$Post);
-					
-						//Stores the day of the post so that we can use it later
-						$postDate = $post->post_date;
-						$date = strtotime($postDate);
+						$examDate = $exam->exam_date;
+						$date = strtotime($examDate);
 						$day = date('m/d',$date);
 						$dayOfWeek = date('l',$date);
 
-						//If the difference between the post date and today's date is 6 days or more
-						if(($diff->days >= 6) && !($diff->days < 0) && ($post->post_date > $today))
+						if($exam->exam_class == 'MTH 243')
 						{
-							echo "<h4>$dayOfWeek $day</h4>";
-							echo "<div class='panel panel-primary'>";
-								echo "<div class='panel-heading'>";
-								    print_r($post->post_title);
+							if(($diff->days < 0 ) || ($exam->exam_date < $today))
+							{
+								continue;
+							}
+							
+							else
+							{
+								echo "<h4>$dayOfWeek $day</h4>";
+						    		echo "<div class='panel panel-danger'>";
+									echo "<div class='panel-heading'>";
+										print_r($exam->exam_title);
+									echo "</div>";
+									echo "<div class='panel-body'>";
+										print_r($exam->exam_content);
+									echo "</div>";
+									echo "<div class='panel-footer'></div>";
 								echo "</div>";
-								echo "<div class='panel-body'>";
-									print_r($post->post_body);
-								echo "</div>";
-								echo "<div class='panel-footer'></div>";
-							echo "</div>";
-							echo "<br>";
-						}
-
-						//If the post date has passed (a.ka. is behind the current date) continue to look through posts in database table
-						if($diff->days< 0 || $post->post_date < $today)
-						{
-							continue;
+								echo "<br>";		
+							}
 						}
 						
 					}
-
 				?>
 					   	
     	</div>
