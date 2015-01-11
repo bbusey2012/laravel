@@ -1,0 +1,98 @@
+#include <iostream>
+#include <cstdlib>
+#include <unistd.h>
+#include <vector>
+#include <string> 
+#include <fstream>
+
+using namespace std;
+
+//searches through the dictionary to see if it contains the word
+void search(vector<string> dictionary, string Word)
+{
+    cout << "Searching the dictionary for " << Word << "..." << endl;    
+    for(auto word: dictionary)
+    {
+        if(Word.compare(word)==0)
+        {
+            cout << "Found " << word << " in the dictionary that matches " << Word << ", the word that you were searching for" << endl;
+        }
+        else
+        {
+            continue;
+        }
+    }
+    cout << endl;
+}
+
+void printDictionary(vector<string> dict)
+{
+    if(dict.empty())
+    {
+        cout << "The dictionary is empty" << endl;
+    }
+
+    else
+    {
+        cout << "The words in the dictionary are:" << endl;
+        for(auto word: dict)
+        {
+            cout << word << endl;
+        }
+        cout << endl;
+    }
+    
+}
+
+void clear(vector<string> dict)
+{
+    //erase all the entries in the vector
+    for(auto & word: dict)
+    {
+        dict.clear();
+    }
+}
+
+int main()
+{
+    
+    vector<string> dictionary;
+    string line;
+    string word;
+
+    ifstream wordList("./wordList.txt");
+    ifstream myfile("./dictionary.txt");
+
+    if(!(myfile.is_open()))
+    {
+        cout << "Couldn't open the test file..." << endl;
+    }   
+
+    else
+    {
+        //while we are reading lines from the file
+        while(getline(myfile,line))
+        {
+            dictionary.push_back(line);
+        }
+        cout << endl;
+        myfile.close();   
+    }
+
+    if(!(wordList.is_open()))
+    {  
+        cout << "Couldn't open the word list file..." << endl;
+    }
+
+    else
+    {
+        //while we are reading lines from the file
+        while(getline(wordList,word))
+        {
+            search(dictionary,word);
+        }
+        wordList.close();
+    }
+
+    return 0;
+}
